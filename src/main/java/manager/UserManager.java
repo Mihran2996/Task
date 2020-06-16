@@ -16,8 +16,9 @@ import java.util.List;
 
 public class UserManager {
     Connection connection;
+
     public UserManager() throws SQLException {
-        connection= DBConnectionProvider.getInstance().getConnection();
+        connection = DBConnectionProvider.getInstance().getConnection();
     }
 
     public void addUser(User user) {
@@ -29,18 +30,17 @@ public class UserManager {
             preparedStatement.setString(3, user.getSurname());
             preparedStatement.setString(4, user.getEmail());
             preparedStatement.setString(5, user.getPassword());
-            User byEmailAndPassword = getByEmailAndPassword(user.getEmail(),user.getPassword());
-            if(!byEmailAndPassword.getEmail().equals(user.getEmail())){
+            User byEmailAndPassword = getByEmailAndPassword(user.getEmail(), user.getPassword());
+            if (byEmailAndPassword == null) {
                 preparedStatement.executeUpdate();
             }
             ResultSet rs = preparedStatement.getGeneratedKeys();
-                if (rs.next()) {
-                    user.setId( rs.getInt(1));
-                }
-            } catch (SQLException throwables) {
+            user.setId(rs.getInt(1));
+        } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
     }
+
     public User getByEmailAndPassword(String email, String password) throws SQLException {
         String sql = "SELECT * FROM user WHERE email=? AND password=? ";
         PreparedStatement statement = connection.prepareStatement(sql);
@@ -52,11 +52,12 @@ public class UserManager {
         }
         return null;
     }
+
     private User getUserFromResultSet(ResultSet resultSet) {
         User user = null;
         try {
             user = User.builder()
-                    .id( resultSet.getInt(1))
+                    .id(resultSet.getInt(1))
                     .type(UserType.valueOf(resultSet.getString(2)))
                     .name(resultSet.getString(3))
                     .surname(resultSet.getString(4))
@@ -69,20 +70,22 @@ public class UserManager {
         }
         return user;
     }
-    public  void deleteById(int id) throws SQLException {
+
+    public void deleteById(int id) throws SQLException {
         PreparedStatement preparedStatement = connection.prepareStatement("DELETE  FROM user WHERE id=?");
         preparedStatement.setInt(1, id);
         preparedStatement.executeUpdate();
     }
-public List<User> getAllUsers() throws SQLException {
-    List<User> users = new ArrayList<User>();
-    String sql = "SELECT * FROM user ";
-    Statement statement = connection.createStatement();
-    ResultSet resultSet = statement.executeQuery(sql);
-    while (resultSet.next()) {
-        users.add(getUserFromResultSet(resultSet));
+
+    public List<User> getAllUsers() throws SQLException {
+        List<User> users = new ArrayList<User>();
+        String sql = "SELECT * FROM user ";
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery(sql);
+        while (resultSet.next()) {
+            users.add(getUserFromResultSet(resultSet));
+        }
+        return users;
     }
-    return users;
-}
 
 }
