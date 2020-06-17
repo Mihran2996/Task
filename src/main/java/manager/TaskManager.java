@@ -18,7 +18,7 @@ public class TaskManager {
         connection = DBConnectionProvider.getInstance().getConnection();
     }
 
-    public void TaskAdd(Task task) throws SQLException {
+    public void taskAdd(Task task) throws SQLException {
         PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO task(status,name,description,deadline,user_id) VALUES(?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
         preparedStatement.setString(1, String.valueOf(task.getStatus()));
         preparedStatement.setString(2, task.getName());
@@ -61,12 +61,14 @@ public class TaskManager {
         List<Task> task = getTask(userId);
         return task;
     }
-    public void changeTaskId(int id,int userId) throws SQLException {
+
+    public void changeTaskId(int id, int userId) throws SQLException {
         PreparedStatement preparedStatement = connection.prepareStatement("UPDATE `task` SET user_id=? WHERE id=?");
         preparedStatement.setInt(2, id);
-        preparedStatement.setInt(1,userId);
+        preparedStatement.setInt(1, userId);
         preparedStatement.executeUpdate();
     }
+
     public List<Task> getAllTask() throws SQLException, ParseException {
         List<Task> tasks = new ArrayList<Task>();
         String sql = "SELECT * FROM `task`";
@@ -84,5 +86,11 @@ public class TaskManager {
             tasks.add(task);
         }
         return tasks;
+    }
+
+    public void deleteById(int taskId) throws SQLException {
+        PreparedStatement preparedStatement = connection.prepareStatement("DELETE  FROM task WHERE id=?");
+        preparedStatement.setInt(1, taskId);
+        preparedStatement.executeUpdate();
     }
 }

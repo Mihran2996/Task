@@ -1,7 +1,9 @@
 package servlet;
 
 import lombok.SneakyThrows;
+import manager.TaskManager;
 import manager.UserManager;
+import model.Task;
 import model.User;
 
 import javax.servlet.ServletException;
@@ -14,7 +16,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 @WebServlet(urlPatterns = "/remove")
-public class RemoveServlet extends HttpServlet {
+public class RemoveUserServlet extends HttpServlet {
     @SneakyThrows
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

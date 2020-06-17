@@ -17,7 +17,6 @@ import java.util.List;
 @WebServlet(urlPatterns = "/home")
 public class UserHomeServlet extends HttpServlet {
     User currentUser;
-
     @SneakyThrows
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -47,5 +46,7 @@ public class UserHomeServlet extends HttpServlet {
         req.setAttribute("task", tasks);
         req.setAttribute("user", currentUser);
         req.getRequestDispatcher("/home.jsp").forward(req, resp);
+
     }
+
 }

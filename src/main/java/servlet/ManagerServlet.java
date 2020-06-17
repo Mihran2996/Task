@@ -43,16 +43,17 @@ public class ManagerServlet extends HttpServlet {
             userManager.addUser(user);
             List<User> allUsers = userManager.getAllUsers();
             req.setAttribute("user", allUsers);
-            req.getRequestDispatcher("/manager.jsp").forward(req, resp);
+                    resp.sendRedirect("/manager.jsp");
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
 
 
     }
-
-    @SneakyThrows
+//
     @Override
+    @SneakyThrows
+
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         TaskManager taskManager = new TaskManager();
         String status = req.getParameter("status");
@@ -67,8 +68,8 @@ public class ManagerServlet extends HttpServlet {
                 .deadline(sdf.parse(deadline))
                 .userId(Integer.parseInt(userId))
                 .build();
-        taskManager.TaskAdd(task);
-        req.getRequestDispatcher("/manager.jsp").forward(req, resp);
+        taskManager.taskAdd(task);
+        resp.sendRedirect("/manager.jsp");
 
     }
 }

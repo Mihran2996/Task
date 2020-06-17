@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.List;
 
 @WebServlet(urlPatterns = "/change")
-public class ChangeTaskUser extends HttpServlet {
+public class ChangeTaskUserServlet extends HttpServlet {
     @SneakyThrows
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -24,7 +24,7 @@ public class ChangeTaskUser extends HttpServlet {
         int usrId = Integer.parseInt(userId);
         taskManager.changeTaskId(taskId, usrId);
         List<Task> allTask = taskManager.getAllTask();
-        req.setAttribute("tasks", allTask);
+        req.setAttribute("allTask", allTask);
         req.getRequestDispatcher("/manager.jsp").forward(req, resp);
 
     }

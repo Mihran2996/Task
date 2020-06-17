@@ -56,7 +56,8 @@
         </td>
         <td><%=user.getType()%>
         </td>
-        <td><%=user.getName()%>
+        <td><a href="/login?ep=<%=user.getEmail() +","+user.getPassword()%>"><%=user.getName()%>
+        </a>
         </td>
         <td><%=user.getSurname()%>
         </td>
@@ -92,7 +93,7 @@ Please Select Status`  <%=Arrays.toString(TaskStatus.values())%>
 <%
     TaskManager taskManager = new TaskManager();
     List<Task> allTask = taskManager.getAllTask();
-    List<Task> allTask1 = (List<Task>) request.getAttribute("tasks");
+    List<Task> allTask1 = (List<Task>) request.getAttribute("allTask");
 %>
 <% if (allTask != null) {%>
 
@@ -105,6 +106,7 @@ Please Select Status`  <%=Arrays.toString(TaskStatus.values())%>
         <th>deadline</th>
         <th>status</th>
         <th>user_id</th>
+        <th>delete</th>
     </tr>
     <% for (Task task1 : allTask) {%>
     <tr>
@@ -120,6 +122,7 @@ Please Select Status`  <%=Arrays.toString(TaskStatus.values())%>
         </td>
         <td><%=task1.getUserId()%>
         </td>
+        <td><a href="/removetask?id=<%=task1.getId()%>">delete</a></td>
     </tr>
 
     <%}%>
