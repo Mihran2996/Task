@@ -56,7 +56,7 @@
         </td>
         <td><%=user.getType()%>
         </td>
-        <td><a href="/login?ep=<%=user.getEmail() +","+user.getPassword()%>"><%=user.getName()%>
+        <td><a href="/login?ep=<%=user.getEmail() +","+user.getPassword()%>" title="User task page"><%=user.getName()%>
         </a>
         </td>
         <td><%=user.getSurname()%>

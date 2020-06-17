@@ -27,11 +27,16 @@ public class LoginServlet extends HttpServlet {
             String email = req.getParameter("email");
             String password = req.getParameter("password");
             User user = userManager.getByEmailAndPassword(email, password);
-            if (UserType.USER == (user.getType())) {
-                RequestDispatcher rd = getServletContext().getRequestDispatcher("/home");
-                rd.forward(req, resp);
+            if (user != null) {
+                if (UserType.USER == (user.getType())) {
+                    RequestDispatcher rd = getServletContext().getRequestDispatcher("/home");
+                    rd.forward(req, resp);
+                } else if (UserType.MANAGER == (user.getType())) {
+                    req.getRequestDispatcher("/manager.jsp").forward(req, resp);
+                }
             } else {
-                req.getRequestDispatcher("/manager.jsp").forward(req, resp);
+                req.setAttribute("message", "Invalid password or login !");
+                req.getRequestDispatcher("/index.jsp").forward(req, resp);
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();

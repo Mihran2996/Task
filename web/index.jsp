@@ -14,5 +14,6 @@
     <br>
     <input type="submit" value="click">
 </form>
+<p style="color: red"><%=request.getAttribute("message")%></p>
 </body>
 </html>
