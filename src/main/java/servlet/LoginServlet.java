@@ -32,7 +32,7 @@ public class LoginServlet extends HttpServlet {
             if (user != null) {
                 if (UserType.USER == (user.getType())) {
                     RequestDispatcher rd = getServletContext().getRequestDispatcher("/home");
-                    rd.forward(req,resp);
+                    rd.forward(req, resp);
                 } else {
                     manager = userManager.getById(user.getId());
                     req.getRequestDispatcher("/manager.jsp").forward(req, resp);

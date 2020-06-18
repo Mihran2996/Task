@@ -52,11 +52,16 @@
 
 <% } %>
 <h2>You can change status</h2>
-Please Select Status`  <%=Arrays.toString(TaskStatus.values())%>
+Please Select Status`
+
 <form action="/home" method="get">
-    <input type="number" placeholder="taskId" name="id"><br>
+    <select name="status">
+        <option>TODO</option>
+        <option>FINISHED</option>
+        <option>IN_PROGRESS</option>
+    </select>
     <br>
-    <input type="text" placeholder="status" name="status"><br>
+    <input type="number" placeholder="taskId" name="id"><br>
     <br>
     <input type="submit" value="change">
 </form>

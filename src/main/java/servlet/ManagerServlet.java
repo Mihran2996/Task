@@ -43,14 +43,14 @@ public class ManagerServlet extends HttpServlet {
             userManager.addUser(user);
             List<User> allUsers = userManager.getAllUsers();
             req.setAttribute("user", allUsers);
-                    resp.sendRedirect("/manager.jsp");
+            resp.sendRedirect("/manager.jsp");
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
 
 
     }
-//
+
     @Override
     @SneakyThrows
 
