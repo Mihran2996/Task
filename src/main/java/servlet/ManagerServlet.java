@@ -71,5 +71,6 @@ public class ManagerServlet extends HttpServlet {
         taskManager.taskAdd(task);
         resp.sendRedirect("/manager.jsp");
 
+
     }
 }

@@ -20,6 +20,8 @@ import java.util.List;
 
 @WebServlet(urlPatterns = "/login")
 public class LoginServlet extends HttpServlet {
+    public static User manager;
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
@@ -30,8 +32,10 @@ public class LoginServlet extends HttpServlet {
             if (user != null) {
                 if (UserType.USER == (user.getType())) {
                     RequestDispatcher rd = getServletContext().getRequestDispatcher("/home");
-                    rd.forward(req, resp);
+                    resp.sendRedirect("/home");
                 } else if (UserType.MANAGER == (user.getType())) {
+                    manager = userManager.getById(user.getId());
+                    User us=manager;
                     req.getRequestDispatcher("/manager.jsp").forward(req, resp);
                 }
             } else {

@@ -77,6 +77,25 @@ public class UserManager {
         preparedStatement.executeUpdate();
     }
 
+    public User getById(int id) throws SQLException {
+        ResultSet resultSet;
+        PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM `user` WHERE id=?");
+        preparedStatement.setInt(1, id);
+        resultSet = preparedStatement.executeQuery();
+        User user = null;
+        while (resultSet.next()) {
+            user = User.builder()
+                    .id(resultSet.getInt(1))
+                    .type(UserType.valueOf(resultSet.getString(2)))
+                    .name(resultSet.getString(3))
+                    .surname(resultSet.getString(4))
+                    .email(resultSet.getString(5))
+                    .password(resultSet.getString(6))
+                    .build();
+        }
+        return user;
+    }
+
     public List<User> getAllUsers() throws SQLException {
         List<User> users = new ArrayList<User>();
         String sql = "SELECT * FROM user ";
@@ -85,7 +104,14 @@ public class UserManager {
         while (resultSet.next()) {
             users.add(getUserFromResultSet(resultSet));
         }
-        return users;
+        List<User> users1 = new ArrayList<User>();
+        for (int i = 0; i < users.size(); i++) {
+            if (users.get(i).getType() == UserType.MANAGER) {
+                continue;
+            }
+            users1.add(users.get(i));
+        }
+        return users1;
     }
 
 }

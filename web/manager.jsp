@@ -1,11 +1,9 @@
-<%@ page import="java.util.Arrays" %>
-<%@ page import="model.UserType" %>
-<%@ page import="model.TaskStatus" %>
 <%@ page import="manager.UserManager" %>
 <%@ page import="model.User" %>
 <%@ page import="java.util.List" %>
 <%@ page import="manager.TaskManager" %>
-<%@ page import="model.Task" %><%--
+<%@ page import="model.Task" %>
+<%@ page import="servlet.LoginServlet" %><%--
   Created by IntelliJ IDEA.
   User: MIHRAN
   Date: 15.06.2020
@@ -15,15 +13,30 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Manager</title>
 
 </head>
 <body>
-<h1>Welcome Manager page</h1>
+<h1>Welcome Manager page ` </h1>
+<%if (LoginServlet.manager != null) {%>
+<caption>ADMIN</caption>
+<ul style="color: blue">
+    <li><%=LoginServlet.manager .getName()%>
+    </li>
+    <li><%=LoginServlet.manager .getSurname()%>
+    </li>
+    <li><%=LoginServlet.manager .getEmail()%>
+    </li>
+</ul>
+<%}%>
+
+
 <form action="/man" method="post">
     <h3>For user add</h3>
-    Please Select User Type`  <%=Arrays.toString(UserType.values())%><br>
-    <input type="text" placeholder="type" name="type"><br>
+    <select name="type">
+        <option>MANAGER</option>
+        <option>USER</option>
+    </select>
+    <br>
     <br>
     <input type="text" placeholder="name" name="name"><br>
     <br>
@@ -37,7 +50,8 @@
 </form>
 <%
     UserManager userManager = new UserManager();
-    List<User> allUsers = userManager.getAllUsers();
+    List<User>
+            allUsers = userManager.getAllUsers();
     List<User> allUsers1 = (List<User>) request.getAttribute("user");
     if (allUsers != null) {%>
 <table border="1px solid black">
@@ -50,7 +64,8 @@
         <th>email</th>
         <th>delete</th>
     </tr>
-    <% for (User user : allUsers) {%>
+    <% for
+    (User user : allUsers) {%>
     <tr>
         <td><%=user.getId()%>
         </td>
@@ -67,15 +82,18 @@
     </tr>
     <%}%>
     <%
-        allUsers = allUsers1;
-    %>
+        allUsers = allUsers1;%>
 </table>
 <%}%>
 <br>
 <h3>For task add</h3>
-Please Select Status`  <%=Arrays.toString(TaskStatus.values())%>
 <form action="/man" method="get">
-    <input type="text" placeholder="status" name="status"><br>
+    <select name="status">
+        <option>TODO</option>
+        <option>FINISHED</option>
+        <option>IN_PROGRESS</option>
+    </select>
+    <br>
     <br>
     <input type="text" placeholder="name" name="name"><br>
     <br>
@@ -95,7 +113,10 @@ Please Select Status`  <%=Arrays.toString(TaskStatus.values())%>
     List<Task> allTask = taskManager.getAllTask();
     List<Task> allTask1 = (List<Task>) request.getAttribute("allTask");
 %>
-<% if (allTask != null) {%>
+<% if
+(
+        allTask != null
+) {%>
 
 <table border="1px solid black">
     <caption>All tasks</caption>
@@ -108,7 +129,8 @@ Please Select Status`  <%=Arrays.toString(TaskStatus.values())%>
         <th>user_id</th>
         <th>delete</th>
     </tr>
-    <% for (Task task1 : allTask) {%>
+    <% for
+    (Task task1 : allTask) {%>
     <tr>
         <td><%=task1.getId()%>
         </td>
@@ -124,11 +146,8 @@ Please Select Status`  <%=Arrays.toString(TaskStatus.values())%>
         </td>
         <td><a href="/removetask?id=<%=task1.getId()%>">delete</a></td>
     </tr>
-
     <%}%>
-    <%
-        allTask = allTask1;
-    %>
+    <%allTask = allTask1;%>
 </table>
 <%}%>
 <br>
