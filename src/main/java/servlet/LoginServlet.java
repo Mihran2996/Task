@@ -35,7 +35,6 @@ public class LoginServlet extends HttpServlet {
                     resp.sendRedirect("/home");
                 } else if (UserType.MANAGER == (user.getType())) {
                     manager = userManager.getById(user.getId());
-                    User us=manager;
                     req.getRequestDispatcher("/manager.jsp").forward(req, resp);
                 }
             } else {
