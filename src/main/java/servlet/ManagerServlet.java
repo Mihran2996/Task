@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
-import java.util.List;
 
 @WebServlet(urlPatterns = "/man")
 public class ManagerServlet extends HttpServlet {
@@ -40,14 +39,19 @@ public class ManagerServlet extends HttpServlet {
                     .email(email)
                     .password(password)
                     .build();
+            User byEmail = userManager.getByEmail(email);
+            StringBuilder msg=new StringBuilder();
+            if (byEmail!=null && byEmail.getEmail().equals(email)) {
+                msg.append("<span style=\"color:red\">Email already exists!</span>");
+            }else {
+                msg.append("<span style=\"color:green\">User was added</span>");
+            }
+            req.getSession().setAttribute("msg",msg.toString());
             userManager.addUser(user);
-            List<User> allUsers = userManager.getAllUsers();
-            req.setAttribute("user", allUsers);
             resp.sendRedirect("/manager.jsp");
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-
 
     }
 

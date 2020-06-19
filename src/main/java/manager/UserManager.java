@@ -30,7 +30,7 @@ public class UserManager {
             preparedStatement.setString(3, user.getSurname());
             preparedStatement.setString(4, user.getEmail());
             preparedStatement.setString(5, user.getPassword());
-            User byEmailAndPassword = getByEmailAndPassword(user.getEmail(), user.getPassword());
+            User byEmailAndPassword = getByEmail(user.getEmail());
             if (byEmailAndPassword == null) {
                 preparedStatement.executeUpdate();
             }
@@ -53,6 +53,16 @@ public class UserManager {
         return null;
     }
 
+    public User getByEmail(String email) throws SQLException {
+        String sql = "SELECT * FROM user WHERE email=? ";
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setString(1, email);
+        ResultSet resultSet = statement.executeQuery();
+        if (resultSet.next()) {
+            return getUserFromResultSet(resultSet);
+        }
+        return null;
+    }
     private User getUserFromResultSet(ResultSet resultSet) {
         User user = null;
         try {
@@ -112,6 +122,12 @@ public class UserManager {
             users1.add(users.get(i));
         }
         return users1;
+    }
+    public void changePassword(String password,int id) throws SQLException {
+        PreparedStatement preparedStatement = connection.prepareStatement("UPDATE `user` SET password=? WHERE id=?");
+        preparedStatement.setString(1,password);
+        preparedStatement.setInt(2, id);
+        preparedStatement.executeUpdate();
     }
 
 }

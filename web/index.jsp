@@ -16,6 +16,7 @@
 </form>
 <%if (request.getAttribute("message") != null) {%>
 <p style="color: red"><%=request.getAttribute("message")%>
+    <a href="changepassword.jsp" title="Reestablish Password">click</a>
 </p>
 <%}%>
 </body>

@@ -20,11 +20,11 @@
 <%if (LoginServlet.manager != null) {%>
 <caption>ADMIN</caption>
 <ul style="color: blue">
-    <li><%=LoginServlet.manager .getName()%>
+    <li><%=LoginServlet.manager.getName()%>
     </li>
-    <li><%=LoginServlet.manager .getSurname()%>
+    <li><%=LoginServlet.manager.getSurname()%>
     </li>
-    <li><%=LoginServlet.manager .getEmail()%>
+    <li><%=LoginServlet.manager.getEmail()%>
     </li>
 </ul>
 <%}%>
@@ -48,6 +48,16 @@
     <br>
     <input type="submit" value="click">
 </form>
+<%
+    String msg = "";
+    if (session.getAttribute("msg") != null) {
+        msg = (String) session.getAttribute("msg");
+        session.removeAttribute("msg");
+    }
+%>
+
+<span ><%=msg%>
+</span>
 <%
     UserManager userManager = new UserManager();
     List<User>
