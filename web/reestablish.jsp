@@ -12,13 +12,14 @@
 </head>
 <body>
 <%
-    int code=0;
+    int code = 0;
     if (session.getAttribute("codemsg") != null) {
         code = (int) session.getAttribute("codemsg");
         session.removeAttribute("codemsg");
-    }
 %>
 <span style="color: green"><%=code%></span>
+<%}%>
+
 
 <form action="/reestablish" method="post">
     <h3>Please input Password`</h3>
